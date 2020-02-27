@@ -1,0 +1,58 @@
+button{
+	color: white;
+	text-shadow: 2px 2px 2px #4E4E4E;
+	font-size: 1em;
+	background-repeat: no-repeat;
+	text-align: left;
+	float:left;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+	height:150px;
+	width:400px;
+}
+#reptile{
+	background-image:url(../img/lezard.jpg);
+	
+}
+#oiseaux{
+	background-image:url(../img/oiseau.jpg);
+	
+}
+#mammifere{
+	background-image:url(../img/mammifère.jpg);
+	
+}
+#batracien{
+	background-image:url(../img/batracien.jpeg);
+	
+}
+#insectePollinisateur{
+	background-image:url(../img/papillon.jpg);
+	
+}
+#insecteNonPollinisateur{
+	background-image:url(../img/bourdon.jpeg);
+	
+}
+
+#container-flex{		
+	display: flex;
+	flex-direction:column ;
+	background: #b4ac83;	
+	-webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.5); 
+	box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.5);
+	opacity: 0.7;	
+	text-align:center;
+	width: 90%;
+	border-radius: 10px;
+	padding: 10px;
+	margin: auto;
+	margin-top: 20px;
+}
+
+
+.container {
+display: none;
+}

@@ -1,0 +1,137 @@
+-- phpMyAdmin SQL Dump
+-- version 4.9.2
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1:3308
+-- Généré le :  jeu. 27 fév. 2020 à 13:52
+-- Version du serveur :  8.0.18
+-- Version de PHP :  7.3.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données :  `jardin`
+--
+
+DELIMITER $$
+--
+-- Procédures
+--
+DROP PROCEDURE IF EXISTS `AfficherEspece`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AfficherEspece` (IN `espece` VARCHAR(50))  NO SQL
+    SQL SECURITY INVOKER
+    COMMENT 'Affiche les visiteur en fonction de l espece donné en parametre'
+BEGIN
+
+SELECT * 
+FROM visiteurnature 
+WHERE espece = visiteurnature.espece
+ORDER BY visiteurnature.espece ASC;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `AjoutVisiteur`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AjoutVisiteur` (IN `nom` VARCHAR(50), IN `description` LONGTEXT, IN `espece` VARCHAR(50), IN `nbAppercu` INT(11))  NO SQL
+    SQL SECURITY INVOKER
+BEGIN
+
+INSERT INTO visiteurnature 
+
+VALUES( 0,nom, description,CURRENT_TIMESTAMP, nbAppercu, espece);
+
+END$$
+
+DROP PROCEDURE IF EXISTS `NewAdmin`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `NewAdmin` (IN `nom` VARCHAR(50), IN `prenom` VARCHAR(50), IN `email` VARCHAR(50), IN `mdp` VARCHAR(50))  NO SQL
+    SQL SECURITY INVOKER
+BEGIN
+
+INSERT INTO admin VALUES(0,nom,prenom,email,mdp);
+
+END$$
+
+DROP PROCEDURE IF EXISTS `VerifAdmin`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `VerifAdmin` (IN `mail` INT, IN `mdp` INT)  NO SQL
+    SQL SECURITY INVOKER
+    COMMENT 'verifie que l''email est le mdp existe dans la base'
+BEGIN
+
+SELECT *
+FROM admin
+WHERE admin.email = mail AND admin.mdp = mdp;
+
+END$$
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
+  `idAdmin` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `mdp` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`idAdmin`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `admin`
+--
+
+INSERT INTO `admin` (`idAdmin`, `nom`, `prenom`, `email`, `mdp`) VALUES
+(19, 'lo conte', 'damien', 'dlc65@free.fr', '$argon2i$v=19$m=65536,t=4,p=1$dzM0Rk5ZR2VacGtVUlNLbw$oZr4niOsADWTukMK2mr71dDuOdhlFxAJOPCpArO+2vM');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `visiteurnature`
+--
+
+DROP TABLE IF EXISTS `visiteurnature`;
+CREATE TABLE IF NOT EXISTS `visiteurnature` (
+  `idVisiteurNature` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) NOT NULL,
+  `description` longtext NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `nbAppercu` int(11) NOT NULL,
+  `espece` varchar(50) NOT NULL,
+  PRIMARY KEY (`idVisiteurNature`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `visiteurnature`
+--
+
+INSERT INTO `visiteurnature` (`idVisiteurNature`, `nom`, `description`, `date`, `nbAppercu`, `espece`) VALUES
+(1, 'crapaud', 'c est un amphibien Trapu et court sur pattes, il mesure une dizaine de centimètres et sa couleur, parfois tachetée, varie du marron au gris en passant par le vert olive ou brun jaunâtre. Les glandes proéminentes placées derrières ses pupilles lui donnent un regard globuleux peu séduisant mais efficace puisqu\'il voit la nuit. Le crapaud va jouer un rôle important contre certains nuisibles du jardin. Sa nourriture est constituée de ce qu\'il chasse, à savoir insectes, cloportes, mille-pattes, vers de terre, mais surtout limaces, escargots et chenilles particulièrement ennuyeux au potager lorsqu\'il s\'attaquent aux salades, fraises et autres fruits et légumes en devenir. \r\nMalheureusement, le crapaud est victime de la disparition des zones humides (qu\'on urbanise de plus en plus !), des pesticides qui polluent les rivières et autres étangs en l\'empoisonnant et des véhicules qui l\'écrasent sur les routes. \r\nSes prédateurs comme le hérisson par exemple lui laissent peu de répit et ignorent que le crapaud est protégé en France par un arrêté depuis 1993 et par la convention de Berne. \r\n\r\n\r\nLa peau  d\'un crapaud est sèche, épaisse et constellée de verrues, mais tout de même douce.\r\n leurs pattes arrière: sont plus courtes et moins musclées, ne leur permettant que de petits sauts.\r\nLes crapauds sont des amphibiens plutôt terrestres qui ne recherchent l\'eau qu\'en période d\'accouplement et de ponte. Ils se distinguent par leur manière de pondre leurs œufs. ce sont de longs filaments qui s\'accrochent au fond de l\'eau. \r\n\r\nJ ai pu observer durant les deux dernières semaines de février  la présence dans le bassin de 4 males pour une femelle. celle ci d ailleurs fait presque le double en taille d un male.\r\nau 3 mars les crapauds sont partis et le fond du bassin est tapis de chapelet d oeuf.\r\n', '2020-01-08 14:23:08', 5, 'batracien'),
+(2, 'la pie bavarde', 'La Pie bavarde est l\'une des grandes espèces de corvidés parmi les plus répandues en Europe et dans une grande partie de l\'Asie. Les pies peuvent aisément être identifiées grâce à leur morphologie et à leur plumage noir et blanc caractéristique. Il existe 13 sous-espèces de pie bavarde.', '2020-01-08 15:28:54', 3, 'oiseaux'),
+(3, 'le Hibou', 'Le hibou est un rapace nocturne très répandu en France. Tout comme sa cousine la chouette, avec qui il ne faut pas le confondre, le hibou est un animal protégé dans notre pays. Certaines espèces de hiboux migrent pendant les mois d’hiver, d’autres non. Sa vue et son ouïe très particulières font du hibou un redoutable chasseur la nuit.', '2020-01-08 15:31:05', 1, 'oiseaux'),
+(4, 'l\'Abeille', 'Les abeilles forment un clade d\'insectes hyménoptères de la superfamille des Apoïdes. Au moins 20 000 espèces d\'abeilles sont répertoriées sur la planète dont environ 2 000 en Europe et près de 1 000 en France. ', '2020-01-09 09:14:40', 12, 'insectePollinisateur'),
+(7, 'le Lezard', 'Les lézards sont de petits reptiles de l\'ordre des Squamates. Ils partagent le fait d\'avoir quatre pattes, des oreilles à tympan apparent sans conduit auditif externe, le corps recouvert d\'écailles et la mue.', '2020-01-09 09:39:06', 5, 'reptile'),
+(8, 'le Bourdon', 'Les bourdons, genre Bombus, sont des insectes sociaux volants de la famille des Apidae. Comme l\'abeille mellifère, les différentes espèces de bourdons se nourrissent du nectar des fleurs et récoltent le pollen pour nourrir leur larves.', '2020-01-09 09:40:57', 3, 'insecteNonPollinisateur'),
+(9, 'le Frelon', 'Vespa est un genre d\'insectes sociaux, de la famille des Vespidae, sous-famille des Vespinae, communément appelés frelons, mais aussi guichards, talènes, lombardes, cabridans selon les régions et pays.', '2020-01-09 09:42:04', 6, 'insecteNonPollinisateur'),
+(10, 'le Papillon', 'Les Lépidoptères sont un ordre d\'insectes holométaboles dont la forme adulte est communément appelée papillon, dont la larve est appelée chenille, et la nymphe chrysalide.', '2020-01-09 09:43:04', 8, 'insectePollinisateur'),
+(11, 'la Souris', 'La souris est un animal rongeur qui appartient à la famille du rat, mais est beaucoup plus petite. Son poil est lisse et doux.      Son museau est long, elle a des oreilles plutôt larges et de tout petits yeux noirs. Sa queue est de la même longueur que son corps. Au cours d\'une année, une souris peut donner naissance à 100 petits. Elle a besoin de la compagnie des autres et s\'entend bien avec les sujets d\'une même portée. Il peut se produire des mésententes avec un nouvel arrivant. Les mâles vont souvent se battre pour prendre le pouvoir, et les morsures ne sont pas rares.  La souris est un animal sans défense, toujours sur la défensive et prête à s\'enfuir. Elle vit en bandes, dans les régions chaudes ou tempérées, où elle s\'installe dans toutes les habitations à sa convenance. Elle s\'active surtout la nuit.  Elle s\'attaque à tout ce qu\'elle trouve, papier, nourriture etc... Elle se creuse un petit terrier et y transporte de la mousse,  quand elle vit dans la nature où elle cause de sérieux dégâts aux récoltes. Elle grignote, les épis, et le grain. Son pire prédateur est le chat!', '2020-01-09 09:44:28', 2, 'mammifere'),
+(12, 'le Triton', 'Les tritons sont des amphibiens urodèles, représentés entre autres par le genre Triturus. Ils s\'apparentent aux salamandres ; d\'une manière générale, on appelle plutôt « tritons » les urodèles qui, à l\'état adulte, sont munis de poumons mais passent beaucoup de temps dans l\'eau. Cette distinction souffre de nombreuses exceptions, du fait que les mots « triton » et « salamandre » précèdent de longtemps la découverte de nombreuses espèces — elle reste cependant particulièrement valide en Europe.', '2020-01-09 09:48:40', 2, 'batracien'),
+(13, 'la Tortue de terre', 'Les tortues terrestres forment les testudinidés, une famille de tortues cryptodires. Ce sont des tortues qui passent toute leur vie sur la terre sans avoir besoin d\'un cours d\'eau pour vivre.', '2020-01-09 10:01:35', 1, 'reptile');
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

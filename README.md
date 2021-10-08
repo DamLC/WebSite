@@ -1,6 +1,9 @@
-﻿# Site web
-« Derrière chez moi » est un site collaboratif sur l’observation de la présence de la faune dans un
- jardin dont l’entretien se fait de façon écologique.
+﻿# Projet Derrière chez moi :  création d’un site web en relation avec une base de données.
+ **HTML, CSS, JavaScript, PHP, Ajax, MySQL, WAMP**
+ 
+> - Conception et manipulation d’une BDD 
+> - Création de compte administrateur avec cryptage du mot de passe  
+> - Connexion utilisateur 
+> - Insertion de nouvelles données via un formulaire du site.  
 
-techno utilisée :
-HTML, CSS, JS, PHP, SQL
+
